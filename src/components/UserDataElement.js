@@ -13,15 +13,18 @@ import './UserDataElement.css'
 
 const UserDataElement=props=>{
     const {Details,deletedata,editdata}=props
-    const{id}=Details
+
+    const{_id}=Details
+    console.log(Details)
    
     const deleteMethod=()=>{
-        deletedata(id)
-        console.log(id)
+        console.log(_id)
+        deletedata(_id)
+        
     }
     const editMethod=()=>{
-        editdata(id)
-        deletedata(id)
+        editdata(_id)
+       // deletedata(_id)
     }
     
     

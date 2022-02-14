@@ -8,17 +8,17 @@ class Form extends Component{
         super(props)
     this.state={
         List1:[],
-        id:uuidv4(),
+       // id:uuidv4(),
         firstname:"",
         lastname:"",
         mail:"",
         dateofbirth:""
         //toggle:true
     }
-    this.deletedata.bind(this);
+   // this.deletedata.bind(this);
 }
 componentDidMount(){
-    axios.get('http://localhost:8080/name')
+    axios.get('http://localhost:8000/app')
     .then(response=>{
         console.log(response)
         this.setState({List1:response.data})
@@ -49,7 +49,7 @@ componentDidMount(){
         
        const {firstname,lastname,mail,dateofbirth}=this.state 
        const newData={
-           id:uuidv4(),
+           //id:uuidv4(),
            //id:id,
            firstname:firstname,
            lastname:lastname,
@@ -72,7 +72,8 @@ componentDidMount(){
            
        }))
        
-       axios.post('http://localhost:8080/set',newData)
+       axios.post('http://localhost:8000/app',newData)
+      
     .then(response=>{
         console.log(response)
         //this.setState({List1:response.data})
@@ -91,16 +92,25 @@ componentDidMount(){
     }
     deletedata=(id)=>{
         
+        
         this.setState(precState =>({
               List1:precState.List1.filter(each=>
                 id!==each.id)
        }))
-       // }))
+       
         //const {data1}=this.state
-       // alert(id);
-        console.log(id)
+        //alert(id);
+        
 
-       axios.delete(`http://localhost:8080/delete/${id}`)
+
+       axios.delete('http://localhost:8000/app/'+id)
+       .then(response=>{
+        console.log(response)
+        //this.setState({List1:response.data})
+    })
+    .catch(error=>{
+        console.log(error)
+    }) 
        
       /*  axios.get('http://localhost:8080/name')
     .then(response=>{
@@ -115,12 +125,15 @@ componentDidMount(){
     }
     
     editdata=(id)=>{
+       // alert(id)
       const {firstname,lastname,mail,dateofbirth}=this.state 
       const {newData}=this.state
       const {List1}=this.state 
+      console.log(List1)
       const userList=List1.map(each=>{
         if(id===each.id){
-
+            console.log(id)
+            console.log(each.id)
        this.setState({firstname:each.firstname,
                         lastname:each.lastname,
                         mail:each.mail,
@@ -131,7 +144,18 @@ componentDidMount(){
         
       }
     })
-    axios.delete(`http://localhost:8080/delete/${id}`)
+    this.setState(precState =>({
+        List1:precState.List1.filter(each=>
+          id!==each.id)
+ }))
+    axios.patch('http://localhost:8000/app/'+id)
+    .then(response=>{
+        console.log(response)
+        //this.setState({List1:response.data})
+    })
+    .catch(error=>{
+        console.log(error)
+    }) 
         //this.setState({
          //   List1:userList
             
