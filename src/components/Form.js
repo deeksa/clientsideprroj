@@ -20,7 +20,7 @@ class Form extends Component{
 componentDidMount(){
     axios.get('http://localhost:8000/app')
     .then(response=>{
-        console.log(response)
+        console.log(responsee)
         this.setState({List1:response.data})
     })
     .catch(error=>{
